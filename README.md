@@ -1,1 +1,1 @@
-# baybayin
+# ᜊᜌ᜔ᜊᜌᜒᜈ᜔ (Baybayin-Core)
