@@ -5,6 +5,8 @@ struct TranslateTestCase {
     std::string_view baybayin;
 };
 
+// Traditional is also known as B17 (Baybayin 17) since there are 17 characters,
+// three vowels and 14 consonants.
 static constexpr std::array SyllablesTraditional = std::to_array<TranslateTestCase>({
     {"ba", "ᜊ"},{"be", "ᜊᜒ"},{"bi", "ᜊᜒ"},{"bo", "ᜊᜓ"},{"bu", "ᜊᜓ"},
     {"ka", "ᜃ"},{"ke", "ᜃᜒ"},{"ki", "ᜃᜒ"},{"ko", "ᜃᜓ"},{"ku", "ᜃᜓ"},
@@ -25,12 +27,13 @@ static constexpr std::array SyllablesTraditional = std::to_array<TranslateTestCa
 
     // lone vowels
     {"a", "ᜀ"},
-    {"e", "ᜁ"},
+    {"e", "ᜁ"}, // e/i are allophones
     {"i", "ᜁ"},
-    {"o", "ᜂ"},
+    {"o", "ᜂ"},  // o/u are allophones
     {"u", "ᜂ"},
 });
 
+// Reformed is also known as B17+ for the addition of the vowel-"killing" krus
 static constexpr std::array SyllablesReformed = std::to_array<TranslateTestCase>({
     {"b", "ᜊ᜔"},{"k", "ᜃ᜔"},{"g", "ᜄ᜔"},{"d", "ᜇ᜔"},{"h", "ᜑ᜔"},{"l", "ᜎ᜔"},
     {"m", "ᜋ᜔"},{"n", "ᜈ᜔"},{"ng", "ᜅ᜔"},{"p", "ᜉ᜔"},
@@ -60,7 +63,17 @@ constexpr std::array TestVocabulary = std::to_array<Translation>({
     {"paano", "ᜉᜀᜈᜓ", "ᜉᜀᜈᜓ"},
     {"kabuuan", "ᜃᜊᜓᜂᜀ", "ᜃᜊᜓᜂᜀᜈ᜔"},
     {"naiwan", "ᜈᜁᜏ", "ᜈᜁᜏᜈ᜔"},
-    {"opo", "ᜂᜉᜓ", "ᜂᜉᜓ"}
+    {"opo", "ᜂᜉᜓ", "ᜂᜉᜓ"},
+
+    // 'ng' pronounced 'nang' is a special word that keys off of whitespace in latin for disambiguity
+    {" ng ", "ᜈ", " ᜈᜅ᜔ "},
+    {"ng ", "ᜈ", "ᜈᜅ᜔ "},
+    // 'mga' pronounced 'manga' is a special word that keys off of whitespace in latin for disambiguity
+    {" mga ", "ᜋᜅ", " ᜋᜅ "},
+    {"mga ", "ᜋᜅ", "ᜋᜅ "},
+
+    // Initial consonant clusters
+    //{"plano", "ᜉᜒᜎᜈᜓ", "ᜉ᜔ᜎᜈᜓ"}
 
 });
 

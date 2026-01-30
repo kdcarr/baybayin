@@ -3,10 +3,10 @@
 #include <CLI/CLI.hpp>
 #include <baybayin.h>
 
-int transliterate(std::istream& istream) {
+int transliterate(std::istream& istream, const baybayin::Orthography& ortho) {
     std::string line;
     while (std::getline(istream, line)) {
-        std::cout << baybayin::latin_to_baybayin(line) << std::endl;
+        std::cout << baybayin::latin_to_baybayin(line, ortho) << std::endl;
     }
     if (istream.bad()) {
         std::cerr << "Error reading stdin: " << std::strerror(errno) << std::endl;
@@ -19,26 +19,36 @@ int main(int argc, char** argv) {
     CLI::App app{"\nA phonetic transliteration tool that converts from Latin to Baybayin", "bbn"};
     app.option_defaults()->always_capture_default();
 
-    std::filesystem::path input;
-    app.add_option("input", input, "Input file or '-' to read from stdin");
+    std::filesystem::path input_param;
+    app.add_option("input", input_param, "Input file or '-' to read from stdin")
+        ->required()
+        ->check(CLI::ExistingFile | CLI::IsMember({"-"}));
 
-    std::string_view ortho = "reformed";
-    app.add_option("--ortho", ortho, "Set the preferred orthography")
+    std::string_view ortho_param = "reformed";
+    app.add_option("--ortho", ortho_param, "Preferred orthography")
         ->check(CLI::IsMember({"traditional", "reformed"}))
         ->type_name("");
 
-    std::filesystem::path output;
-    app.add_option("--output", output, "Output text file UTF8");
+    std::filesystem::path output_param;
+    app.add_option("--output", output_param, "Output file");
     CLI11_PARSE(app, argc, argv);
 
-    if (input.compare("-") == 0) {
+    baybayin::Orthography ortho = baybayin::Orthography::Traditional;
+    if (ortho_param == "reformed") {
+        ortho = baybayin::Orthography::Reformed;
+    }
+
+    if (input_param.compare("-") == 0) {
         std::ios_base::sync_with_stdio(false);
         std::cin.tie(nullptr);
-        return transliterate(std::cin);
+        return transliterate(std::cin, ortho);
     }
-    std::ifstream in_file(input);
+    std::ifstream in_file(input_param);
     if (!in_file) {
-        std::cerr << "Error: could not open input file " << input << " " << std::strerror(errno) << std::endl;
+        std::cerr << "Error: could not open input file " << input_param << " " << std::strerror(errno) << std::endl;
+        return EXIT_FAILURE;
     }
-    return transliterate(in_file);
+
+
+    return transliterate(in_file, ortho);
 }
