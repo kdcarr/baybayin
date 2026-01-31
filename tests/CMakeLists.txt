@@ -1,0 +1,6 @@
+include(utils)
+include(GoogleTest)
+find_package(GTest REQUIRED)
+enable_testing()
+executable(tl_tests tl_tests.cpp "" "GTest::gtest_main;baybayin-core")
+gtest_discover_tests(tl_tests)

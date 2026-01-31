@@ -1,5 +1,8 @@
 #pragma once
 
+#include <array>
+#include <string>
+
 struct TranslateTestCase {
     std::string_view latin;
     std::string_view baybayin;
@@ -64,17 +67,11 @@ constexpr std::array TestVocabulary = std::to_array<Translation>({
     {"kabuuan", "ᜃᜊᜓᜂᜀ", "ᜃᜊᜓᜂᜀᜈ᜔"},
     {"naiwan", "ᜈᜁᜏ", "ᜈᜁᜏᜈ᜔"},
     {"opo", "ᜂᜉᜓ", "ᜂᜉᜓ"},
-
-    // 'ng' pronounced 'nang' is a special word that keys off of whitespace in latin for disambiguity
-    {" ng ", "ᜈ", " ᜈᜅ᜔ "},
-    {"ng ", "ᜈ", "ᜈᜅ᜔ "},
-    // 'mga' pronounced 'manga' is a special word that keys off of whitespace in latin for disambiguity
-    {" mga ", "ᜋᜅ", " ᜋᜅ "},
-    {"mga ", "ᜋᜅ", "ᜋᜅ "},
+    {"nang", "ᜈ", "ᜈᜅ᜔"},
+    {"manga", "ᜋᜅ","ᜋᜅ"}
 
     // Initial consonant clusters
-    //{"plano", "ᜉᜒᜎᜈᜓ", "ᜉ᜔ᜎᜈᜓ"}
-
+    //{"plano", "ᜉᜒᜎᜈᜓ", "ᜉ᜔ᜎ 1q2ᜈᜓ"}
 });
 
 constexpr TranslateTestCase TranslationTraditional (const Translation& l) {

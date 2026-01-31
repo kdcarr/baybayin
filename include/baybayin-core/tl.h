@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include "string"
 #include <string_view>
 
 namespace baybayin {
@@ -79,13 +79,6 @@ inline std::string latin_to_baybayin(const std::string_view in,
                     else if (v == 'o' || v == 'u')
                         out += "ᜓ";
                     i += 2; // Skip 'g' and vowel
-                } else if ( (i==0 or std::isspace(in[i - 1])) and std::isspace(in[ng_pos +1])) {
-                    // we have 'ng' the word
-                    if (ortho == Orthography::Traditional)
-                        out += "ᜈ";
-                    else
-                        out += "ᜈᜅ᜔";
-                    i ++; // Skip 'g'
                 }
             } else {
                 // It's a trailing NG
@@ -94,17 +87,6 @@ inline std::string latin_to_baybayin(const std::string_view in,
                     out += (style == Virama::Pamudpod ? "᜴" : "᜔");
                 }
                 i += 1; // Skip 'g'
-            }
-            continue;
-        }
-
-        if (c == 'm' && i + 1 < n && ascii_lower(in[i + 1]) == 'g' && i + 2 < n && ascii_lower(in[i + 2]) == 'a') {
-            if (const size_t mga_pos = i + 2; mga_pos + 1 < n) {
-                if ( (i == 0 or std::isspace(in[i - 1])) and std::isspace(in[mga_pos +1])) {
-                    // we have 'mga' the word
-                    out += "ᜋᜅ";
-                    i = i+2; // Skip 'ga'
-                }
             }
             continue;
         }
@@ -144,7 +126,8 @@ inline std::string latin_to_baybayin(const std::string_view in,
                 out += "||";
                 break;
             default:
-                out += in[i]; // Non-alphabetic
+                break;
+                //out += in[i]; // Non-alphabetic
         }
     }
     return out;

@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
-#include <baybayin.h>
 #include <algorithm>
 #include <filesystem>
 #include <map>
-#include "unit_tests.h"
+#include <baybayin-core/tl.h>
+#include "include/tl_tests.h"
 
 using namespace baybayin;
 
