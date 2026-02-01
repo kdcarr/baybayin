@@ -1,4 +1,5 @@
-add_library(baybayin-core INTERFACE)
+add_library(baybayin-core INTERFACE
+        ../tests/norm_tests.cpp)
 target_include_directories(baybayin-core
         INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}

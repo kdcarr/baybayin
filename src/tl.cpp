@@ -24,17 +24,18 @@ int main(const int argc, char** argv) {
     app.option_defaults()->always_capture_default();
 
     std::filesystem::path input_param;
-    app.add_option("input", input_param, "Input file or '-' to read from stdin")
-        ->required()
-        ->check(CLI::ExistingFile | CLI::IsMember({"-"}));
+    app.add_option("--input", input_param, "Input file or '-' to read from stdin")
+        ->check(CLI::ExistingFile);
+
+    std::filesystem::path output_param;
+    app.add_option("--output", output_param, "Output file, otherwise stdout");
 
     const char* REFORMED={"reformed"};
     std::string_view ortho_param = REFORMED;
     app.add_option("--orthography", ortho_param)
         ->check(CLI::IsMember({"traditional", REFORMED}));
 
-    std::filesystem::path output_param;
-    app.add_option("--output", output_param, "Output file, otherwise stdout");
+
     CLI11_PARSE(app, argc, argv);
 
     const auto ortho = ortho_param == REFORMED ? Orthography::Reformed : Orthography::Traditional;
