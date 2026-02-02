@@ -8,10 +8,10 @@
 
 using namespace phil_norm;
 
-template<LatinOrthography Tortho>
+template<LatinOrthography TOrtho>
 [[gnu::always_inline]] void
 f_normalizer(std::string &output) {
-    switch (Tortho) {
+    switch (TOrtho) {
     case LatinOrthography::ABAKADA:
         output.push_back('p');
         break;
@@ -21,10 +21,10 @@ f_normalizer(std::string &output) {
     }
 }
 
-template<LatinOrthography Tortho>
+template<LatinOrthography TOrtho>
 [[gnu::always_inline]] void
 v_normalizer(std::string &output) {
-    switch (Tortho) {
+    switch (TOrtho) {
     case LatinOrthography::ABAKADA:
         output.push_back('b');
         break;
@@ -34,12 +34,12 @@ v_normalizer(std::string &output) {
     }
 }
 
-template<ForeignLanguage TLang, LatinOrthography Tortho>
+template<ForeignLanguage TLang, LatinOrthography TOrtho>
 [[gnu::always_inline]] void
 x_normalizer(const std::string_view &input, const size_t pos, std::string &output) {
     switch (TLang) {
     case ForeignLanguage::ENGLISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             if (pos == 0 or std::isspace(input[pos - 1])) {
                 // TODO: bug we need a word_boundary function that knows about punctuation
@@ -59,7 +59,7 @@ x_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
         }
         break;
     case ForeignLanguage::SPANISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             if (pos == 0 or std::isspace(input[pos - 1])) {
                 // TODO: bug we need a word_boundary function that knows about punctuation
@@ -81,10 +81,10 @@ x_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
     }
 }
 
-template<LatinOrthography Tortho>
+template<LatinOrthography TOrtho>
 [[gnu::always_inline]] void
 z_normalizer(std::string &output) {
-    switch (Tortho) {
+    switch (TOrtho) {
     case LatinOrthography::ABAKADA:
         output.push_back('s');
         break;
@@ -94,7 +94,7 @@ z_normalizer(std::string &output) {
     }
 }
 
-template<ForeignLanguage Tlang, LatinOrthography Tortho>
+template<ForeignLanguage Tlang, LatinOrthography TOrtho>
 [[gnu::always_inline]] size_t
 ll_normalizer(const std::string_view &input, const size_t pos, std::string &output) {
     size_t count = 0;
@@ -103,7 +103,7 @@ ll_normalizer(const std::string_view &input, const size_t pos, std::string &outp
         output.push_back('l');
         break;
     case ForeignLanguage::SPANISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             if (const auto next = pos + 1;
                 next < input.size()) {
@@ -159,16 +159,16 @@ ph_normalizer(const std::string_view &input, const size_t pos, std::string &outp
     return count;
 }
 
-template<ForeignLanguage TLang, LatinOrthography Tortho>
+template<ForeignLanguage TLang, LatinOrthography TOrtho>
 [[gnu::always_inline]] size_t
 c_normalizer(const std::string_view &input, const size_t pos, std::string &output) {
-    if constexpr (TLang == ForeignLanguage::ENGLISH and Tortho == LatinOrthography::ABAKADA) {
+    if constexpr (TLang == ForeignLanguage::ENGLISH and TOrtho == LatinOrthography::ABAKADA) {
     }
     // TODO: this might be the best place to handle double vowels since we know its not a Philippine word
     size_t count = 0;
     switch (TLang) {
     case ForeignLanguage::ENGLISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             if (auto next = pos + 1;
                 next < input.size()) {
@@ -205,7 +205,7 @@ c_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
         }
         break;
     case ForeignLanguage::SPANISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA: {
             auto next = pos + 1;
             if (input[next] == 'h') {
@@ -236,13 +236,13 @@ c_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
     return count;
 }
 
-template<ForeignLanguage TLang, LatinOrthography Tortho>
+template<ForeignLanguage TLang, LatinOrthography TOrtho>
 [[gnu::always_inline]] void
 j_normalizer(const std::string_view &input, const size_t pos, std::string &output) {
     // TODO: this is not done, j at the end in spanish, etc.
     switch (TLang) {
     case ForeignLanguage::ENGLISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             output.append("dy");
             break;
@@ -252,7 +252,7 @@ j_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
         }
         break;
     case ForeignLanguage::SPANISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             output.append("h");
             break;
@@ -264,13 +264,13 @@ j_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
     }
 }
 
-template<ForeignLanguage TLang, LatinOrthography Tortho>
+template<ForeignLanguage TLang, LatinOrthography TOrtho>
 [[gnu::always_inline]] size_t
 q_normalizer(const std::string_view &input, const size_t pos, std::string &output) {
     size_t count = 0;
     switch (TLang) {
     case ForeignLanguage::ENGLISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             if (const auto next = pos + 1;
                 next < input.size()) {
@@ -289,7 +289,7 @@ q_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
         }
         break;
     case ForeignLanguage::SPANISH:
-        switch (Tortho) {
+        switch (TOrtho) {
         case LatinOrthography::ABAKADA:
             if (const auto next = pos + 1;
                 next < input.size()) {
@@ -309,7 +309,7 @@ q_normalizer(const std::string_view &input, const size_t pos, std::string &outpu
     return count;
 }
 
-template<ForeignLanguage TLang, LatinOrthography Tortho>
+template<ForeignLanguage TLang, LatinOrthography TOrtho>
 [[gnu::always_inline]] void
 consonant_normalize(const std::string_view &input, std::string &output) {
     output.reserve(input.size());
@@ -346,31 +346,31 @@ consonant_normalize(const std::string_view &input, std::string &output) {
         }
         switch (c) {
         case 'f':
-            f_normalizer<Tortho>(output);
+            f_normalizer<TOrtho>(output);
             continue;
         case 'v':
-            v_normalizer<Tortho>(output);
+            v_normalizer<TOrtho>(output);
             continue;
         case 'z':
-            z_normalizer<Tortho>(output);
+            z_normalizer<TOrtho>(output);
             continue;
         case 'x':
-            x_normalizer<TLang, Tortho>(input, i, output);
+            x_normalizer<TLang, TOrtho>(input, i, output);
             continue;
         case 'c':
-            i += c_normalizer<TLang, Tortho>(input, i, output);
+            i += c_normalizer<TLang, TOrtho>(input, i, output);
             continue;
         case 'j':
-            j_normalizer<TLang, Tortho>(input, i, output);
+            j_normalizer<TLang, TOrtho>(input, i, output);
             continue;
         case 'q':
-            i += q_normalizer<TLang, Tortho>(input, i, output);
+            i += q_normalizer<TLang, TOrtho>(input, i, output);
             continue;
         case 'l':
-            i += ll_normalizer<TLang, Tortho>(input, i, output);
+            i += ll_normalizer<TLang, TOrtho>(input, i, output);
             continue;
         case 'p':
-            i += ph_normalizer<TLang, Tortho>(input, i, output);
+            i += ph_normalizer<TLang, TOrtho>(input, i, output);
             continue;
         case static_cast<char>(0xC3): // handle spanish or modern filipino ñ, Ñ
             // TODO: make this a templated function for ortography
