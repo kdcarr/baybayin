@@ -1,5 +1,7 @@
 add_library(baybayin-core INTERFACE
         ../tests/norm_tests.cpp
+        baybayin-core/norm/consonants.h
+        baybayin-core/util/util.h
 )
 target_include_directories(baybayin-core
         INTERFACE

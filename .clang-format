@@ -58,6 +58,8 @@ AllowShortCompoundRequirementOnASingleLine: true
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
 AllowShortNamespacesOnASingleLine: false
+AlwaysBreakAfterDefinitionReturnType: true
+AlwaysBreakAfterReturnType: AllDefinitions
 AlwaysBreakTemplateDeclarations: Yes
 BinPackLongBracedList: true
 BracedInitializerIndentWidth: -1
@@ -71,10 +73,10 @@ BraceWrapping:
   AfterStruct: false
   AfterUnion: false
   AfterExternBlock: false
-  BeforeCatch: true
-  BeforeElse: true
+  BeforeCatch: false
+  BeforeElse: false
   BeforeLambdaBody: false
-  BeforeWhile: true
+  BeforeWhile: false
   SplitEmptyFunction: false
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
@@ -92,6 +94,7 @@ ColumnLimit: 120
 CompactNamespaces: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ContinuationIndentWidth: 0
+EmptyLineBeforeAccessModifier: Never
 EnumTrailingComma: Leave
 IncludeCategories: 
   - Regex: '^<.*'
