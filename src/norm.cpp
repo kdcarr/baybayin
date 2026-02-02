@@ -18,7 +18,7 @@ int normalize(
     ) {
     std::string line;
     while (std::getline(istream, line)) {
-        ostream << fast_normalizer(line, language, orthography, diphthongs, clusters) << std::endl;
+        ostream << fast_normalize_dispatcher(line, language, orthography, diphthongs, clusters) << std::endl;
         // TODO: check if ostream is still good and exit with error otherwise
     }
     if (istream.bad()) {
