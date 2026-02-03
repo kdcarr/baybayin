@@ -9,13 +9,15 @@
 namespace phil_norm {
 
 inline std::string
-normalizer(const std::string_view &input, const ForeignLanguage lang, const LatinOrthography ortho,
-           const Diphthong diphthong, const InitialCluster clusters
+normalizer(const std::string_view &input, const ForeignLanguage language, const LatinOrthography orthography,
+           const Diphthong diphthongs, const InitialCluster clusters
 ) {
     std::string firstPass, secondPass;
-    consonant_normalize_dispatch(input, firstPass, lang, ortho);
-    vowel_normalize_dispatch(firstPass, secondPass, lang, ortho, diphthong);
-    // TODO: as an option, we may want to convert digits to the phonetic spellings
+    consonant_normalize_dispatch(input, firstPass, language, orthography);
+    vowel_normalize_dispatch(firstPass, secondPass, language, orthography, diphthongs);
+    if (clusters == InitialCluster::TRADITIONAL) {
+        // TODO: smooth consonant cluster first-syllables with an extra vowel
+    }
     return std::move(secondPass);
 }
 }

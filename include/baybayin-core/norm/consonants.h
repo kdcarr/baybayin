@@ -373,7 +373,7 @@ consonant_normalize(const std::string_view &input, std::string &output) {
             i += ph_normalizer<TLang, TOrtho>(input, i, output);
             continue;
         case static_cast<char>(0xC3): // handle spanish or modern filipino ñ, Ñ
-            // TODO: make this a templated function for ortography
+            // TODO: make this a templated function for orthography
             if (const auto next = i + 1;
                 next < input.size()) {
                 if (input[next] == static_cast<char>(0xB1) || input[next] == static_cast<char>(0x91)) {
@@ -390,6 +390,14 @@ consonant_normalize(const std::string_view &input, std::string &output) {
         output.pop_back();
 }
 
+/**
+ * @name consonant_normalize_dispatch
+ * @brief Calls the appropriate templated function for consonant_normalize based on the runtime parameters provided.
+ * @param input Input string
+ * @param output Empty output string
+ * @param lang Input language
+ * @param ortho Output orthography
+ */
 inline void
 consonant_normalize_dispatch(const std::string_view &input, std::string &output, const ForeignLanguage lang,
                              const LatinOrthography ortho
